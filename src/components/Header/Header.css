@@ -1,0 +1,59 @@
+.header {
+    display: flex;
+    padding: 18px 70px;
+    justify-content: space-between;
+    font-size: 12px;
+    align-self: normal;
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.logo {
+    width: 38px;
+    height: 38px;
+    margin-right: 44px;
+    display: inline-block;
+    background-image: url(../../images/logo_movies-explorer.svg);
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+    transition: opacity .3s linear;
+}
+
+.logo:hover {
+    opacity: .4;
+}
+
+.header__options {
+    display: flex;
+    justify-content: end;
+    width: 100%;
+}
+
+.logo_form {
+    margin-bottom: 40px;
+    transition: opacity .3s linear;
+}
+
+.logo_form:hover {
+    opacity: .4;
+}
+
+@media screen and (max-width: 1279px) {
+    .header {
+        padding-left: 30px;
+        padding-right: 30px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .header {
+        padding-left: 14px;
+        padding-right: 14px;
+    }
+
+    .logo_form {
+        margin-bottom: 50px;
+    }
+}
