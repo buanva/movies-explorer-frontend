@@ -61,6 +61,7 @@
     font-size: 14px;
     line-height: 17px;
     transition: opacity .3s linear;
+    color: #000000;
 }
 
 .about-me__link:hover {

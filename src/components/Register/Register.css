@@ -101,6 +101,7 @@
     line-height: 17px;
     text-align: center;
     color: #2BE080;
+    text-decoration: none;
     transition: opacity .3s linear;
 }
 

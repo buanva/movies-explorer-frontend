@@ -1,7 +1,6 @@
 import NavTab from "../NavTab/NavTab";
 
 import './Promo.css';
-import '../../link/link.css';
 
 function Promo(props) {
     return (

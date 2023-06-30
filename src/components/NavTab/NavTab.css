@@ -19,6 +19,7 @@
     justify-content: center;
     padding: 10px 0;
     transition: opacity .3s linear;
+    color: #000000;
 }
 
 .nav-tab__link:hover {
@@ -43,6 +44,7 @@
     justify-content: center;
     padding: 21px 0;
     transition: opacity .3s linear;
+    color: #000000;
 }
 
 .nav-tab__tech:hover {

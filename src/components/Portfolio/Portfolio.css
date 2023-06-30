@@ -27,6 +27,7 @@
     padding: 19px 0;
     align-items: center;
     transition: opacity .3s linear;
+    color: #000000;
 }
 
 .portfolio__item:hover {

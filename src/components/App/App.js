@@ -5,6 +5,7 @@ import SavedMovies from "../SavedMovies/SavedMovies";
 import Profile from "../Profile/Profile";
 import RegisterChild from '../RegisterChild/RegisterChild';
 import Login from "../Login/Login";
+import '../../link/link.css'
 
 import './App.css';
 

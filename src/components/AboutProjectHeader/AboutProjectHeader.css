@@ -7,6 +7,7 @@
     line-height: 16px;
     text-align: right;
     transition: opacity .3s linear;
+    color: #000000;
 }
 
 .header__registration-option:hover {
@@ -15,6 +16,7 @@
 
 .header__login-option {
     background-color: #2BE080;
+    color: #000000;
     border-radius: 3px;
     padding: 8px 20px;
     font-style: normal;

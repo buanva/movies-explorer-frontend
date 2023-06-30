@@ -18,6 +18,7 @@
     align-items: center;
     justify-content: center;
     transition: opacity .3s linear;
+    color: #000000;
 }
 
 .header__films:hover {
@@ -33,6 +34,7 @@
     align-items: center;
     justify-content: center;
     transition: opacity .3s linear;
+    color: #000000;
 }
 
 .header__saved-films:hover {
@@ -52,6 +54,7 @@
     display: flex;
     justify-content: center;
     transition: opacity .3s linear;
+    color: #000000;
 }
 
 .header__profile-option:hover {

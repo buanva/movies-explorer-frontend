@@ -56,6 +56,7 @@
     line-height: 16px;
     text-align: right;
     transition: opacity .3s linear;
+    color: #000000;
 }
 
 .footer__link:hover {
