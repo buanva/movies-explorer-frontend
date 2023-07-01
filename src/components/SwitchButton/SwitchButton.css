@@ -3,18 +3,6 @@
     display: flex;
 }
 
-@media screen and (min-width: 601px) {
-    .switch-container_mobile {
-        display: none;
-    }
-}
-
-@media screen and (max-width: 600px) {
-    .switch-container_desktop {
-        display: none;
-    }
-}
-
 .switch-container__switch-item {
     position: relative;
     display: inline-block;
@@ -64,6 +52,18 @@ input:checked + .switch-container__slider::before {
     font-weight: 400;
     font-size: 13px;
     line-height: 18px;
+}
+
+@media screen and (min-width: 601px) {
+    .switch-container_mobile {
+        display: none;
+    }
+}
+
+@media screen and (max-width: 600px) {
+    .switch-container_desktop {
+        display: none;
+    }
 }
 
 @media screen and (max-width: 768px) {

@@ -117,10 +117,20 @@
 
     .register__form {
         width: 100%;
+        align-items: center;
     }
 
     .register__title {
         margin: 0 0 80px;
+        align-self: center;
+    }
+
+    .register__input-title {
+        width: 260px;
+    }
+
+    .register__input {
+        width: 260px;
     }
 
     .register__item-error_margin {
@@ -136,7 +146,6 @@
         font-size: 12px;
         line-height: 15px;
         margin-bottom: 29px;
-        align-self: center;
     }
 
     .register__caption {

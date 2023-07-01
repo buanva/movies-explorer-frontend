@@ -7,6 +7,7 @@
 }
 
 .search-form__wrapper {
+    width: 100%;
     border-bottom: 1px #E8E8E8 solid;
     padding-bottom: 69px;
     margin-bottom: 10px;
@@ -23,15 +24,15 @@
 }
 
 .search-form__item {
-    width: 913px;
+    flex-grow: 1;
     border-right: 1px #E8E8E8 solid;
     display: flex;
     margin-right: 29px;
 }
 
 .search-form__search-icon {
-    width: 22px;
-    height: 22px;
+    width: 34px;
+    height: 34px;
     background-image: url(../../images/search-icon_movie-explorer.svg);
     background-repeat: no-repeat;
     background-size: contain;
@@ -44,13 +45,13 @@
     width: 100%;
     border: none;
     background-color: #F9F9F9;
-    padding: 0;
-    color: #A0A0A0;
+    padding: 0 10px 0 10px;
+    color: #000000;
+    outline-style: none;
     font-style: normal;
     font-weight: 400;
     font-size: 18px;
     line-height: 20px;
-    margin-right: 46px;
 }
 
 .search-form__search-string::-webkit-input-placeholder {
@@ -59,7 +60,6 @@
     font-weight: 400;
     font-size: 18px;
     line-height: 20px;
-
 }
 
 .search-form__search-string::-moz-placeholder {
@@ -87,8 +87,21 @@
 }
 
 .search-form__search-button {
+    width: 34px;
+    height: 34px;
     margin-right: 30px;
     cursor: pointer;
+    border: none;
+    background-color: transparent;
+    background-image: url(../../images/search-button_movie-explorer.svg);
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: center;
+    transition: opacity .3s linear;
+}
+
+.search-form__search-button:hover {
+    opacity: .8;
 }
 
 @media screen and (max-width: 1279px) {
@@ -106,7 +119,6 @@
     }
 
     .search-form__item {
-        width: 500px;
         margin-right: 19px;
     }
 
@@ -115,9 +127,9 @@
     }
 }
 
-@media screen and (max-width: 767px) {
+@media screen and (max-width: 768px) {
     .search-form {
-        padding: 80px 10px 120px;
+        padding-bottom: 70px;
     }
 
     .search-form__wrapper {
@@ -131,15 +143,20 @@
         padding: 19px;
         margin-bottom: 45px;
     }
+}
 
-    .search-form__item {
-        width: 100%;
-        border-right: none;
-        margin: 0;
+@media screen and (max-width: 600px) {
+    .search-form {
+        padding: 80px 14px 40px;
     }
 
     .search-form__search-icon {
         display: none;
+    }
+
+    .search-form__item {
+        border-right: none;
+        margin: 0;
     }
 
     .search-form__search-button {

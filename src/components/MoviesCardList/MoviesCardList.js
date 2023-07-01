@@ -6,8 +6,8 @@ function MoviesCardList(props) {
             <ul className="movies-card-list__grid">
                 {props.children}
             </ul>
-            <div class="more">
-                <button class="more__button">Ещё</button>
+            <div className="more">
+                <button className="more__button">Ещё</button>
             </div>
         </section>
     )

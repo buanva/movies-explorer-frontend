@@ -27,6 +27,7 @@
     justify-content: space-between;
     padding: 159px 90px 90px;
     box-sizing: border-box;
+    z-index: 2;
 }
 
 .menu__close-button {
@@ -47,6 +48,8 @@
     line-height: 22px;
     text-align: center;
     margin: 0 0 28px;
+    display: block;
+    color: #000000;
 }
 
 .menu__profile-option {

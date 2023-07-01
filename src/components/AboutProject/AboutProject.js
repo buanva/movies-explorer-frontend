@@ -12,6 +12,7 @@ function AboutProject(props) {
                         доработки.
                     </p>
                 </div>
+                <div className="about-project__columns-separator"></div>
                 <div className="about-project__two-columns-main-text">
                     <h3 className="about-project__two-columns-title">На выполнение диплома ушло 5 недель</h3>
                     <p className="about-project__two-columns-description">

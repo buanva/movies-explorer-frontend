@@ -13,11 +13,11 @@ function Profile(props) {
                     <h2 className="profile__title">Привет, Виталий!</h2>
                     <div className="profile__input-container profile__input-container_border-bottom">
                         <span className="profile__input-caption">Имя</span>
-                        <input className="profile__input" />
+                        <input className="profile__input" required />
                     </div>
                     <div className="profile__input-container">
                         <span className="profile__input-caption">E-mail</span>
-                        <input className="profile__input" />
+                        <input className="profile__input" required />
                     </div>
                 </form>
                 <button className="profile__edit-button">Редактировать</button>

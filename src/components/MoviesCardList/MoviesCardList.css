@@ -36,6 +36,7 @@
     border-color: #E8E8E8;
     border-radius: 9px;
     transition: opacity .3s linear;
+    border-style: solid;
 }
 
 .more__button:hover {
