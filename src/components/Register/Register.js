@@ -1,14 +1,19 @@
 import { Link } from 'react-router-dom';
 import './Register.css';
 
-function Register({ children, submitBtnText, captionText, linkText, redirectTo }) {
+function Register({ children, submitBtnText, captionText, linkText, redirectTo, errorText, isValid, onSubmit }) {
+    function handleSubmit(evt) {
+        evt.preventDefault()
+        onSubmit()
+    }
 
     return (
         <section className="register">
-            <form className="register__form">
+            <form className="register__form" noValidate onSubmit={handleSubmit}>
                 <Link className="logo logo_form" to="/"></Link>
                 {children}
-                <button className="register__save-button" type="submit">{submitBtnText}</button>
+                <span className="register__item-error register__item-error_submit">{errorText}</span>
+                <button className="register__save-button" disabled={!isValid} type="submit">{submitBtnText}</button>
             </form>
             <div className="register__caption">
                 <p className="register__caption-text">{captionText}</p>

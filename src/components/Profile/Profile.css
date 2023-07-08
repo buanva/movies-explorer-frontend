@@ -53,6 +53,27 @@
     font-size: 11px;
     line-height: 13px;
     text-align: right;
+    outline-style: none;
+}
+
+.profile__input:valid {
+    border-color: #2BE080;
+}
+
+.profile__input:invalid {
+    color: #EE3465;
+}
+
+.profile__item-error {
+    display: block;
+    width: 100%;
+    font-style: normal;
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #EE3465;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 .profile__edit-button {
@@ -69,7 +90,11 @@
     transition: opacity .3s linear;
 }
 
-.profile__edit-button:hover {
+.profile__edit-button:disabled {
+    cursor: auto;
+}
+
+.profile__edit-button:not(:disabled):hover {
     opacity: .4;
 }
 

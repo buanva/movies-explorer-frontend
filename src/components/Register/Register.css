@@ -38,6 +38,15 @@
     font-weight: 400;
     font-size: 14px;
     line-height: 17px;
+    outline-style: none;
+}
+
+.register__input:valid {
+    border-color: #2BE080;
+}
+
+.register__input:invalid {
+    color: #EE3465;
 }
 
 .register__item-error {
@@ -59,6 +68,11 @@
     margin-bottom: 203px;
 }
 
+.register__item-error_submit {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
 .register__save-button {
     padding: 13px 0 15px;
     background-color: #2BE080;
@@ -74,7 +88,11 @@
     transition: opacity .3s linear;
 }
 
-.register__save-button:hover {
+.register__save-button:disabled {
+    background-color: #dbdbdb;
+}
+
+.register__save-button:hover:not(:disabled) {
     opacity: .4;
 }
 
