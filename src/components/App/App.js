@@ -16,12 +16,24 @@ import './App.css';
 import { errorToJson } from '../../utils/helpers';
 import NotFoundPage from '../NotFoundPage/NotFoundPage';
 import { localStorageKeys } from '../../utils/constants';
+import { moviesApi } from '../../utils/MoviesApi';
 
 function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false)
   const [currentUser, setCurrentUser] = useState({})
 
   const navigate = useNavigate()
+
+  function cleanup() {
+    Object.keys(localStorageKeys).forEach((key) => localStorage.removeItem(localStorageKeys[key]))
+    setCurrentUser({})
+    setIsLoggedIn(false)
+    navigate('/', { replace: true })
+  }
+
+  useEffect(() => {
+    localStorage.removeItem(localStorageKeys.savedFilmsRequested)
+  }, [])
 
   useEffect(() => {
     const isLogged = localStorage.getItem(localStorageKeys.isLogged)
@@ -31,7 +43,12 @@ function App() {
         .then((user) => {
           setCurrentUser((oldUserInfo) => { return { ...oldUserInfo, ...user } })
         })
-        .catch(errorToJson((err) => console.error('getCurrentUser', err && err.message, err)))
+        .catch(errorToJson((err, originError) => {
+          if (originError.status === 401) {
+            exit()
+          }
+          console.error('getCurrentUser', err && err.message, err)
+        }))
     }
   }, [])
 
@@ -39,9 +56,14 @@ function App() {
     mainApi.register(name, email, password)
       .then((data) => {
         setCurrentUser((oldUserInfo) => { return { ...oldUserInfo, ...data } })
-        navigate('/signin', { replace: true })
+        handleLogin({ email, password })
       })
-      .catch(errorToJson(error))
+      .catch(errorToJson((err, originError) => {
+        error(err)
+        if (originError.status === 401) {
+          cleanup()
+        }
+      }))
   }
 
   function handleLogin({ email, password }, error) {
@@ -52,7 +74,12 @@ function App() {
         setIsLoggedIn(true)
         navigate('/movies', { replace: true })
       })
-      .catch(errorToJson(error))
+      .catch(errorToJson((err, originError) => {
+        error(err)
+        if (originError.status === 401) {
+          cleanup()
+        }
+      }))
   }
 
   function handleProfileChange(data, callback, error) {
@@ -61,17 +88,17 @@ function App() {
         setCurrentUser((oldUserInfo) => { return { ...oldUserInfo, ...updated } })
         callback()
       })
-      .catch(errorToJson(error))
+      .catch(errorToJson((err, originError) => {
+        error(err)
+        if (originError.status === 401) {
+          cleanup()
+        }
+      }))
   }
 
   function exit() {
     mainApi.signout()
-      .then(() => {
-        Object.keys(localStorageKeys).forEach((key) => localStorage.removeItem(localStorageKeys[key]))
-        setCurrentUser({})
-        setIsLoggedIn(false)
-        navigate('/', { replace: true })
-      })
+      .then(cleanup)
       .catch(errorToJson((err) => console.error('signout', err && err.message, err)))
   }
 
@@ -80,7 +107,12 @@ function App() {
       .then((createdCard) => {
         callback(createdCard)
       })
-      .catch(errorToJson((err) => console.error('addMovie', err && err.message, err)))
+      .catch(errorToJson((err, originError) => {
+        if (originError.status === 401) {
+          cleanup()
+        }
+        console.error('addMovie', err && err.message, err)
+      }))
   }
 
   function deleteMovieFromSaved(movieId, callback) {
@@ -88,7 +120,34 @@ function App() {
       .then((res) => {
         callback(res)
       })
-      .catch(errorToJson((err) => console.error('deleteMovie', err && err.message, err)))
+      .catch(errorToJson((err, originError) => {
+        if (originError.status === 401) {
+          cleanup()
+        }
+        console.error('deleteMovie', err && err.message, err)
+      }))
+  }
+
+  function fetchMovies(callback, error) {
+    moviesApi.getMovies()
+      .then(callback)
+      .catch(errorToJson((err, originError) => {
+        error(err)
+        if (originError.status === 401) {
+          cleanup()
+        }
+      }))
+  }
+
+  function fetchSavedMovies(callback, error) {
+    mainApi.getAllMovies()
+      .then(callback)
+      .catch(errorToJson((err, originError) => {
+        error(err)
+        if (originError.status === 401) {
+          cleanup()
+        }
+      }))
   }
 
   return (
@@ -101,6 +160,7 @@ function App() {
           <Route path="/movies" element={
             <ProtectedRoute
               element={Movies}
+              getMovies={fetchMovies}
               onSaveMovie={saveMovie}
               onDeleteMovie={deleteMovieFromSaved}
               renderIf={isLoggedIn}
@@ -110,6 +170,7 @@ function App() {
           <Route path="/saved-movies" element={
             <ProtectedRoute
               element={SavedMovies}
+              getMovies={fetchSavedMovies}
               onDeleteMovie={deleteMovieFromSaved}
               renderIf={isLoggedIn}
               pathToNavigate="/"

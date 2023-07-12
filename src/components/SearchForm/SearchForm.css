@@ -23,6 +23,11 @@
     box-sizing: border-box;
 }
 
+.search-form__container_disabled {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
 .search-form__item {
     flex-grow: 1;
     border-right: 1px #E8E8E8 solid;
@@ -84,7 +89,11 @@
     transition: opacity .3s linear;
 }
 
-.search-form__search-button:hover {
+.search-form__search-button:disabled {
+    cursor: none;
+}
+
+.search-form__search-button:hover:not(:disabled) {
     opacity: .8;
 }
 

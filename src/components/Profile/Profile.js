@@ -13,8 +13,8 @@ function Profile({ onExit, onProfileDataChange }) {
     const currentUser = useContext(CurrentUserContext);
     const { handleChange, errors, isValid } = useFormWithValidation()
     const [openMenu, setOpenMenu] = useState(false)
-    const [showSuccessNotify, setShowSuccessNotify] = useState(false)
     const [errorMessage, setErrorMessage] = useState("")
+    const [submitDisabled, setSubmitDisabled] = useState(true)
     const nameInputRef = useRef()
     const emailInputRef = useRef()
 
@@ -26,25 +26,30 @@ function Profile({ onExit, onProfileDataChange }) {
     function inputValueChange(evt) {
         handleChange(evt)
         setErrorMessage("")
+        setSubmitDisabled(!isChanged(nameInputRef.current.value, emailInputRef.current.value))
     }
 
     function error(err) {
         console.error('Login error:', err && err.message, err)
+        setSubmitDisabled(false)
         if (err && err.message) {
             setErrorMessage(err.message)
         }
     }
 
+    function isChanged(name, email) {
+       return currentUser.name !== name || currentUser.email !== email
+    }
+
     function editSuccess() {
-        setShowSuccessNotify(true)
-        setTimeout(() => { setShowSuccessNotify(false) }, 2000)
+        alert("Данные успешно изменены!")
     }
 
     function handleSubmit() {
         const name = nameInputRef.current.value
         const email = emailInputRef.current.value
-        const changed = currentUser.name !== name || currentUser.email !== email
-        if (isValid && changed) {
+        if (isValid && isChanged(name, email)) {
+            setSubmitDisabled(true)
             onProfileDataChange({ name, email }, editSuccess, error)
         }
     }
@@ -60,9 +65,7 @@ function Profile({ onExit, onProfileDataChange }) {
             <MoviesHeader onOpenMenu={() => setOpenMenu(true)} />
             <section className="profile">
                 <form className="profile__form" noValidate onKeyDown={onEnterPressed}>
-                    <h2 className="profile__title">{
-                        showSuccessNotify ? "Данные успешно изменены!" : `Привет, ${currentUser.name}!`
-                    }</h2>
+                    <h2 className="profile__title">{`Привет, ${currentUser.name}!`}</h2>
                     <div className="profile__input-container profile__input-container_border-bottom">
                         <span className="profile__input-caption">Имя</span>
                         <input
@@ -91,7 +94,7 @@ function Profile({ onExit, onProfileDataChange }) {
                     <span className="register__item-error">{errors.email}</span>
                 </form>
                 <span className="profile__item-error">{errorMessage}</span>
-                <button className="profile__edit-button" disabled={!isValid} onClick={handleSubmit}>Редактировать</button>
+                <button className="profile__edit-button" disabled={!isValid || submitDisabled} onClick={handleSubmit}>Редактировать</button>
                 <button className="profile__exit-button" onClick={onExit}>Выйти из аккаунта</button>
             </section>
             <Navigation isMenuOpened={openMenu} onCloseMenu={() => setOpenMenu(false)} />

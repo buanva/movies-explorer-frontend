@@ -8,6 +8,7 @@ import Footer from "../Footer/Footer";
 import Navigation from "../Navigation/Navigation";
 
 import texts from "../../utils/texts";
+import { cardsDisplayCount, displaySizes } from "../../utils/constants";
 
 function MoviesBase({
     movies,
@@ -18,8 +19,6 @@ function MoviesBase({
     onSearchMovies,
     onSaveMovie,
     onDeleteMovie,
-    onQueryChange,
-    onSwitcherChange,
     onShowMoreMovies,
     checkIsSavedId = () => { }
 }) {
@@ -31,25 +30,25 @@ function MoviesBase({
     let firstPartOfCardsCount = 0
     let cardsCountInRow = 0
 
-    function setCardsDisplaySettings() {
-        if (window.innerWidth >= 1280) {
-            firstPartOfCardsCount = 12
-            cardsCountInRow = 3
-        } else if (window.innerWidth >= 768) {
-            firstPartOfCardsCount = 8
-            cardsCountInRow = 2
+    function setcardsDisplayCount() {
+        if (window.innerWidth >= displaySizes.Desktop) {
+            firstPartOfCardsCount = cardsDisplayCount.Desktop.firstPart
+            cardsCountInRow = cardsDisplayCount.Desktop.inRow
+        } else if (window.innerWidth >= displaySizes.MobileSizeM) {
+            firstPartOfCardsCount = cardsDisplayCount.MobileSizeM.firstPart
+            cardsCountInRow = cardsDisplayCount.MobileSizeM.inRow
         } else {
-            firstPartOfCardsCount = 5
-            cardsCountInRow = 2
+            firstPartOfCardsCount = cardsDisplayCount.MobileSizeS.firstPart
+            cardsCountInRow = cardsDisplayCount.MobileSizeS.inRow
         }
     }
 
-    setCardsDisplaySettings()
+    setcardsDisplayCount()
 
     let resizeListenerId = null
     function windowResizeHandler() {
         clearTimeout(resizeListenerId)
-        resizeListenerId = setTimeout(setCardsDisplaySettings, 1000)
+        resizeListenerId = setTimeout(setcardsDisplayCount, 1000)
     }
     useEffect(() => {
         window.addEventListener("resize", windowResizeHandler)
@@ -57,11 +56,17 @@ function MoviesBase({
         return () => window.removeEventListener("resize", windowResizeHandler)
     })
 
+    useEffect(() => {
+        if (nothingFound && movies.length) {
+            setNothingFound(false)
+        }
+    }, [nothingFound, movies])
+
     function showMoreMovies() {
         onShowMoreMovies(cardsCountInRow)
     }
 
-    function onFormSubmit(query, switchBtnValue) {
+    function search(query, switchBtnValue) {
         setSearchRequestError(false)
         setNothingFound(false)
         setSearchInProgress(true)
@@ -83,11 +88,11 @@ function MoviesBase({
                 onOpenMenu={() => setOpenMenu(true)}
             />
             <SearchForm
-                onFormSubmit={onFormSubmit}
+                onFormSubmit={search}
                 lastQuery={lastQuery}
+                formDisabled={searchInProgress}
                 switcherValue={switcherCurrentValue}
-                onSwitcherChange={onSwitcherChange}
-                onInput={onQueryChange}
+                onSwitcherChange={(value) => search(lastQuery, value)}
             />
             {searchInProgress ? <Preloader /> : false}
             {nothingFound ? texts.nothingFound : false}

@@ -1,45 +1,24 @@
 import { useEffect, useState } from "react"
 import MoviesBase from "../MoviesBase/MoviesBase"
 
-import { mainApi } from "../../utils/MainApi"
 import { localStorageKeys } from "../../utils/constants"
 import { filterMovies } from "../../utils/helpers"
 
-function SavedMovies({ onDeleteMovie }) {
+function SavedMovies({ getMovies, onDeleteMovie }) {
     const [allMovies, setAllMovies] = useState([])
     const [displayedMovies, setDisplayedMovies] = useState([])
     const [lastQuery, setLastQuery] = useState("")
     const [switcherCurrentValue, setSwitcherCurrentValue] = useState(false)
 
-    const localStorageSavedMoviesKey = localStorageKeys.savedMoviesKey
     const localStorageSavedFilmIdsKey = localStorageKeys.savedFilmsIds
 
     useEffect(() => {
-        mainApi.getAllMovies()
-            .then((movies) => {
-                setAllMovies(movies)
-                setDisplayedMovies(movies)
-            })
-            .catch((err) => console.error(err && err.message, err))
+        getMovies((movies) => {
+            setAllMovies(movies)
+            setDisplayedMovies(movies)
+            localStorage.setItem(localStorageKeys.savedFilmsRequested, true)
+        }, (err) => console.error(err && err.message, err))
     }, [])
-
-    useEffect(() => {
-        const data = JSON.parse(localStorage.getItem(localStorageSavedMoviesKey))
-        if (data) {
-            const { lastQuery, switcherCurrentValue, displayedMovies } = data
-            setLastQuery(lastQuery)
-            setSwitcherCurrentValue(switcherCurrentValue)
-            setDisplayedMovies(lastQuery || switcherCurrentValue ? displayedMovies : allMovies)
-        }
-    }, [])
-
-    useEffect(() => {
-        localStorage.setItem(localStorageSavedMoviesKey, JSON.stringify({
-            displayedMovies,
-            lastQuery,
-            switcherCurrentValue
-        }))
-    }, [displayedMovies, lastQuery, switcherCurrentValue])
 
     function deleteMovie(ownId) {
         onDeleteMovie(ownId, (res) => {
@@ -60,14 +39,9 @@ function SavedMovies({ onDeleteMovie }) {
     }
 
     function searchRequestedMovies(query, isShortFilms, moviesCount, callback) {
+        setLastQuery(query)
+        setSwitcherCurrentValue(isShortFilms)
         callback(prepareAndSetMovies(allMovies, query, isShortFilms, moviesCount))
-    }
-
-    function changeSwitcherValue(value) {
-        setSwitcherCurrentValue(value)
-        if (lastQuery) {
-            prepareAndSetMovies(allMovies, lastQuery, value)
-        }
     }
 
     return (
@@ -77,7 +51,6 @@ function SavedMovies({ onDeleteMovie }) {
             switcherCurrentValue={switcherCurrentValue}
             onSearchMovies={searchRequestedMovies}
             onQueryChange={setLastQuery}
-            onSwitcherChange={changeSwitcherValue}
             isSavedMovies={true}
             onDeleteMovie={deleteMovie}
         />

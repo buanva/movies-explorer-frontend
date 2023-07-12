@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import Header from '../Header/Header';
 import './MoviesHeader.css';
 
@@ -7,10 +7,10 @@ function MoviesHeader({ onOpenMenu }) {
         <Header>
             <div className="header__desktop-nav">
                 <div className="header__films-options">
-                    <Link className="link header__films" to="/movies">Фильмы</Link>
-                    <Link className="link header__saved-films" to="/saved-movies">Сохранённые фильмы</Link>
+                    <NavLink className={({ isActive }) => `link header__films ${isActive ? "header__link_active" :""}`} to="/movies">Фильмы</NavLink>
+                    <NavLink className={({ isActive }) => `link header__saved-films ${isActive ? "header__link_active" :""}`} to="/saved-movies">Сохранённые фильмы</NavLink>
                 </div>
-                <Link className="link header__profile-option" to="/profile">Аккаунт</Link>
+                <NavLink className={({ isActive }) => `link header__profile-option ${isActive ? "header__link_active" :""}`} to="/profile">Аккаунт</NavLink>
             </div>
             <button className="header__mobile-menu-button" onClick={onOpenMenu}></button>
         </Header>

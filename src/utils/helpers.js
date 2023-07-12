@@ -11,7 +11,7 @@ export const filterMovies = (movies, query, isShortFilms) => {
 export const errorToJson = (callback) => {
     return (err) => {
         try {
-            err.json().then((errObj) => callback(errObj))
+            err.json().then((errObj) => callback(errObj, err))
         } catch {
             callback(err)
         }

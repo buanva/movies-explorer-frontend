@@ -10,8 +10,28 @@ export const patterns = {
 }
 
 export const localStorageKeys = {
-    savedMoviesKey: "savedMoviesData",
     moviesKey: "moviesData",
     savedFilmsIds: "savedFilmIds",
+    savedFilmsRequested: "isSavedFilmsRequested",
     isLogged: "isLogged"
+}
+
+export const cardsDisplayCount = {
+    Desktop: {
+        firstPart: 12,
+        inRow: 3
+    },
+    MobileSizeM: {
+        firstPart: 8,
+        inRow: 2
+    },
+    MobileSizeS: {
+        firstPart: 5,
+        inRow: 2
+    }
+}
+
+export const displaySizes = {
+    Desktop: 1280,
+    MobileSizeM: 768
 }
