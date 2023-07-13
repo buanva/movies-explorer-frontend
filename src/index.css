@@ -1,0 +1,6 @@
+@import url(./vendor/normalize.css);
+@import url(./styles/index.css);
+
+body {
+    margin: 0;
+}

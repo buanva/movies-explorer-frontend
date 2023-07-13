@@ -1,0 +1,44 @@
+.header__registration-option {
+    margin-right: 30px;
+    align-self: center;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    text-align: right;
+    transition: opacity .3s linear;
+    color: #000000;
+}
+
+.header__registration-option:hover {
+    opacity: .4;
+}
+
+.header__login-option {
+    background-color: #2BE080;
+    color: #000000;
+    border-radius: 3px;
+    padding: 8px 20px;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 16px;
+    display: flex;
+    transition: opacity .3s linear;
+}
+
+.header__login-option:hover {
+    opacity: .4;
+}
+
+@media screen and (max-width: 767px) {
+    .header__registration-option {
+        font-size: 10px;
+        margin-right: 14px;
+    }
+
+    .header__login-option {
+        padding: 5px 12px;
+        font-size: 10px;
+    }
+}
